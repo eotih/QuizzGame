@@ -27,6 +27,7 @@ import gameEOTIH.eotihLogin;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import java.awt.Font;
 import java.awt.Color;
@@ -247,6 +248,12 @@ public class eotihPRO extends JFrame {
 						int rsaa = stmt2.executeUpdate("update taikhoan set point ='"+diem+"' where tendn ='"+eotihLogin.tendn+"'");
 						if(rsaa == 1) {
 							JOptionPane.showMessageDialog(null, "Success!");
+							try
+				        	{
+								WinMusic win = new WinMusic();
+								win.start();
+							}
+				        	catch (IOException e1) {}
 						}else {
 							JOptionPane.showMessageDialog(null, "Faill!");
 						}
@@ -263,6 +270,18 @@ public class eotihPRO extends JFrame {
 		            }
 		        } else {
 		            System.out.print("Trả lời sai!!");
+		            try
+		        	{
+		            	LoseMusic lose = new LoseMusic();
+						lose.start();
+					}
+		        	catch (LineUnavailableException e1) {} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (UnsupportedAudioFileException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 		        }
 			}
 		});

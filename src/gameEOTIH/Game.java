@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
+import java.util.List;
+
 import javax.swing.*;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -186,6 +189,18 @@ public class Game extends JFrame implements ActionListener {
         readFile();
     }
     private void makeNewGame() {
+    	try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			java.sql.Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/eotih","root","letronghieu");
+			Statement stmt = conn.createStatement();
+			ResultSet rs3 = stmt.executeQuery("select point from taikhoan where tendn='"+eotihLogin.tendn+"'");
+			if(rs3.next()){
+				point = rs3.getInt(1);
+			}else {
+				System.out.println("Không lấy được điểm");
+			}}catch(Exception e1) {
+				System.out.println(e1);
+			}
         // config new game
         question_num = 0;
         point = 0;
